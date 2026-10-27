@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASAGA · Flores de madera hechas a mano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Caveat:wght@500;700&family=Dancing+Script:wght@600&family=Playfair+Display:ital@1&family=Special+Elite&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#faf6f0;--card:#fffdf9;--ink:#3f2e22;--wood:#b98a55;--clay:#b5694a;--sage:#7d8f69;--line:#d9c7a8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Cormorant Garamond',Georgia,serif;font-size:19px;
+ background-image:radial-gradient(rgba(185,138,85,.07) 1px,transparent 1px);background-size:14px 14px}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 5vw;border-bottom:1px dashed var(--line);position:sticky;top:0;background:var(--paper);z-index:5}
+.logo{font-size:30px;letter-spacing:.35em;font-weight:700}
+.logo small{display:block;font-family:Caveat,cursive;letter-spacing:0;font-size:16px;color:var(--clay);margin-top:-6px}
+.btn{font:inherit;font-weight:600;border:1.5px solid var(--ink);background:transparent;color:var(--ink);padding:8px 18px;border-radius:999px;cursor:pointer}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.primary{background:var(--clay);border-color:var(--clay);color:#fff}.btn.primary:hover{background:#9a563a}
+.hero{text-align:center;padding:36px 5vw 8px}
+.hero h1{font-size:clamp(34px,6vw,56px);margin:0}
+.hero p{font-family:Caveat,cursive;font-size:25px;color:var(--clay);margin:4px 0 0}
+main{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1.1fr);gap:28px;padding:20px 5vw 60px;max-width:1200px;margin:auto}
+@media(max-width:820px){main{grid-template-columns:1fr}}
+.stage{position:sticky;top:84px;align-self:start;background:var(--card);border:2px dashed var(--line);border-radius:22px;padding:14px;text-align:center}
+@media(max-width:820px){.stage{position:static}}
+.stage svg{width:100%;max-height:520px}
+.bee,.note{cursor:grab;touch-action:none}.bee:active,.note:active{cursor:grabbing}
+.presets{max-width:1200px;margin:6px auto 0;padding:0 5vw}
+.presets h2{text-align:center;font-size:32px;margin:14px 0 0}
+.presets>p{text-align:center;font-family:Caveat,cursive;color:var(--clay);font-size:24px;margin:0 0 12px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.pcard{background:var(--card);border:2px dashed var(--line);border-radius:18px;padding:10px;text-align:center}
+.pcard svg{width:100%;height:270px}
+.pcard h4{margin:4px 0 0;font-size:25px}.pcard small{display:block;color:#7a6652;font-size:16px}
+.pcard .pp{font-size:26px;color:var(--clay);font-weight:700;margin:6px 0}
+.pcard .btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.sway{transform-origin:150px 300px;transform-box:view-box;animation:sway 6s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(1.6deg)}}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px dashed var(--line);margin-top:8px;padding-top:10px;font-size:22px}
+.total b{font-size:30px;color:var(--clay)}
+.panel{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:16px}
+.panel h3{margin:0 0 4px;font-size:24px}
+.panel h3 span{font-family:Caveat,cursive;color:var(--clay);font-size:26px;margin-right:6px}
+.hint{font-size:16px;color:#7a6652;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.opt{font:inherit;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:8px 6px;cursor:pointer;color:var(--ink);text-align:center}
+.opt.on{border-color:var(--clay);box-shadow:0 0 0 2px var(--clay) inset;background:#fff}
+.opt svg{width:64px;height:64px;display:block;margin:auto}
+.opt small{display:block;color:#7a6652;font-size:15px}
+.swatches{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.sw{width:34px;height:34px;border-radius:50%;border:2px solid #fff;outline:1.5px solid var(--line);cursor:pointer}
+.sw.on{outline:3px solid var(--clay)}
+input[type=text],select,textarea{font:inherit;width:100%;padding:8px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);margin-top:6px}
+label.row{display:flex;align-items:center;gap:10px;margin:6px 0;cursor:pointer}
+.stepper{display:inline-flex;align-items:center;gap:10px}
+.stepper button{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--ink);background:none;font-size:20px;cursor:pointer;color:var(--ink)}
+#drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:var(--card);border-left:2px dashed var(--line);box-shadow:-8px 0 30px rgba(0,0,0,.15);transform:translateX(105%);transition:.3s;z-index:20;display:flex;flex-direction:column;padding:18px}
+#drawer.open{transform:none}
+#items{flex:1;overflow:auto}
+.item{border-bottom:1px dashed var(--line);padding:10px 0;font-size:17px}
+.item .top{display:flex;justify-content:space-between;gap:8px}
+.item button{background:none;border:none;color:var(--clay);cursor:pointer;font:inherit;text-decoration:underline}
+footer{text-align:center;padding:24px;font-family:Caveat,cursive;font-size:22px;color:#7a6652}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">ASAGA<small>hecho a mano</small></div>
+  <button class="btn" id="openCart">Carrito (<span id="count">0</span>)</button>
+</header>
+
+<section class="hero">
+  <h1>Diseña tu pieza</h1>
+  <p>Cada detalle, a tu medida. Hecho con amor y manos artesanas.</p>
+</section>
+
+<section class="presets"><h2>Arreglos listos</h2><p>¿Sin ganas de personalizar? Elige uno ya armado ✿</p><div class="pgrid" id="pgrid"></div></section>
+<main>
+  <section class="stage">
+    <div id="preview"></div>
+    <p class="hint" id="beeTip" hidden>🐝 Arrastra las abejitas y la tarjeta con el cursor (o el dedo) para ponerlas donde quieras.</p>
+    <div class="total"><span>Precio total estimado</span><b id="price">$0</b></div>
+    <button class="btn primary" style="width:100%;margin-top:10px" id="add">Agregar al carrito</button>
+  </section>
+
+  <section>
+    <div class="panel"><h3><span>1.</span>Elige tu flor</h3><p class="hint">Cada modelo se talla y ensambla a mano en madera.</p><div class="grid" id="models"></div></div>
+    <div class="panel"><h3><span>2.</span>Color de pétalos</h3><div class="swatches" id="colors"></div></div>
+    <div class="panel"><h3><span>3.</span>Maceta o florero</h3><div class="grid" id="pots"></div></div>
+    <div class="panel"><h3><span>4.</span>Tamaño de la maceta</h3><p class="hint">Define cuántas flores caben en total.</p><div class="grid" id="sizes"></div></div>
+    <div class="panel"><h3><span>5.</span>Más flores en la maceta <small id="xcount" style="font-size:16px;color:#7a6652"></small></h3><p class="hint" id="xhint"></p><div class="grid" id="xmodels"></div><div id="xlist" style="margin-top:8px"></div></div>
+    <div class="panel"><h3><span>6.</span>Volumen de fondo</h3><p class="hint">Flores artificiales para rellenar. Puedes combinar.</p><div id="fillers"></div></div>
+    <div class="panel"><h3><span>7.</span>Abejitas</h3><p class="hint">Agrégalas y luego arrástralas sobre la vista previa para elegir dónde se posan.</p>
+      <div class="stepper"><button data-bee="-1">−</button><b id="beeN">0</b><button data-bee="1">+</button><span id="beeP" class="hint" style="margin:0"></span></div></div>
+    <div class="panel"><h3><span>8.</span>Nota personalizada</h3>
+      <label class="row"><input type="checkbox" id="noteOn"> Agregar tarjeta con nombre y canción</label>
+      <div id="noteBox" hidden>
+        <input type="text" id="name" maxlength="16" placeholder="Nombre o frase corta">
+        <input type="text" id="song" maxlength="60" placeholder="Canción de Spotify (nombre o enlace)">
+        <select id="font"></select>
+      </div></div>
+    <div class="panel"><h3><span>9.</span>Cantidad</h3>
+      <div class="stepper"><button data-q="-1">−</button><b id="qty">1</b><button data-q="1">+</button></div></div>
+  </section>
+</main>
+<footer>Todas las piezas llevan la marca ASAGA bajo la maceta ✿</footer>
+
+<aside id="drawer">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Tu carrito</h2><button class="btn" id="closeCart">Cerrar</button></div>
+  <div id="items"></div>
+  <div class="total"><span>Total</span><b id="cartTotal">$0</b></div>
+  <button class="btn primary" id="checkout" style="margin-top:10px">Pedir por WhatsApp</button>
+</aside>
+
+<script>
+/* ====== CONFIGURA AQUÍ ====== */
+const WHATSAPP = '5210000000000'; // tu número con lada país
+const MODELS = {
+  rosa:{n:'Rosa',p:299,c:'#e8a0b4'}, clavel:{n:'Clavel',p:299,c:'#c0392b'},
+  margarita:{n:'Margarita',p:279,c:'#f6efe6'}, dalia:{n:'Dalia',p:329,c:'#9b7fd1'},
+  tulipan:{n:'Tulipán',p:319,c:'#e67e22'}, camelia:{n:'Camelia',p:319,c:'#d9433a'}
+};
+const POTS = {grabada:{n:'Madera grabada',p:110,d:'Hexagonal con grabado botánico'}, tejida:{n:'Maceta tejida',p:120,d:'Madera tejida a mano'}, vidrio:{n:'Florero de vidrio',p:90,d:'Transparente'}};
+const FILLERS = {nube:{n:'Nube (gypsophila)',p:60}, manzanilla:{n:'Manzanilla',p:60}, follaje:{n:'Follaje',p:50}};
+const BEE_PRICE = 25, NOTE_PRICE = 40;
+const EXTRA_FACTOR = 0.7; // cada flor extra cuesta 70% del precio de su modelo
+// Tamaños de maceta: cap = flores en total (la principal + extras). p = precio extra sobre la maceta.
+const POTSIZES = {
+  chica:  {n:'Chica',  cap:5,  p:0,   sx:1,    sy:1,   vx:0,   vw:320},
+  mediana:{n:'Mediana',cap:8,  p:90,  sx:1.25, sy:1.1, vx:-30, vw:380},
+  grande: {n:'Grande', cap:10, p:180, sx:1.5,  sy:1.2, vx:-60, vw:440}
+};
+const capX = s => POTSIZES[s.size].cap - 1;
+const FONTS = {'Dancing Script':'Elegante cursiva','Caveat':'Manuscrita','Playfair Display':'Clásica itálica','Special Elite':'Máquina de escribir','Pacifico':'Divertida','Cormorant Garamond':'Serif fina'};
+const COLORS = ['#e8a0b4','#c0392b','#ee7f6b','#f4b183','#f2c94c','#f6efe6','#b39ddb','#6f9bd1','#e67e22'];
+/* ============================ */
+
+const PHOTO = {}; // modelos con foto real disponible en img/
+const S = {size:'chica',notePos:[212,196],extras:[],beePos:[[196,98],[108,150],[178,172]],model:'rosa',color:MODELS.rosa.c,pot:'grabada',bees:0,fill:{},note:false,name:'',song:'',font:'Dancing Script',qty:1};
+let cart = []; try{cart = JSON.parse(localStorage.getItem('asaga_cart')||'[]')}catch(e){}
+const $ = id => document.getElementById(id);
+const money = n => '$' + n.toLocaleString('es-MX');
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function shade(hex,a){const n=parseInt(hex.slice(1),16);const f=v=>Math.max(0,Math.min(255,Math.round(v+a)));
+  return '#'+[n>>16,(n>>8)&255,n&255].map(f).map(v=>v.toString(16).padStart(2,'0')).join('')}
+function rng(seed){return()=>(seed=(seed*9301+49297)%233280)/233280}
+
+/* ---------- Flores con relieve y degradados (centro en 0,0) ---------- */
+function flower(m,c,u){
+  const d=shade(c,-60), md=shade(c,-28), l=shade(c,38);
+  const A=`url(#${u}a)`, B=`url(#${u}b)`;
+  let o=`<defs><radialGradient id="${u}a" cx="50%" cy="100%" r="115%"><stop offset="0" stop-color="${d}"/><stop offset=".5" stop-color="${c}"/><stop offset="1" stop-color="${l}"/></radialGradient>
+  <radialGradient id="${u}b" cx="50%" cy="100%" r="115%"><stop offset="0" stop-color="${shade(c,-85)}"/><stop offset=".6" stop-color="${md}"/><stop offset="1" stop-color="${c}"/></radialGradient></defs>`;
+  const pet=(w,h,f,r)=>`<g transform="rotate(${r})"><path d="M0 0C${-w*.9} ${-h*.1} ${-w*1.25} ${-h*.85} 0 ${-h}C${w*1.25} ${-h*.85} ${w*.9} ${-h*.1} 0 0Z" fill="${f}" stroke="${d}" stroke-width=".9" stroke-opacity=".55"/>
+   <path d="M0 ${-h*.12}V${-h*.72}" stroke="${d}" stroke-opacity=".22"/><path d="M${-w*.7} ${-h*.82}Q0 ${-h*1.06} ${w*.7} ${-h*.82}" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="1.6"/></g>`;
+  const ring=(n,fn,off=0)=>{let s='';for(let i=0;i<n;i++)s+=fn(i*360/n+off);return s};
+  const stamens=(n,r)=>ring(n,a=>`<circle cy="${-r}" r="2.2" fill="#f2c94c" transform="rotate(${a})"/>`);
+  if(m==='rosa'){
+    o+=ring(6,a=>pet(30,46,B,a))+ring(5,a=>pet(25,38,A,a),30)+ring(4,a=>pet(19,28,A,a),12)+ring(3,a=>pet(12,18,B,a),50)
+     +`<path d="M-7 0a7 7 0 1 1 7 7" fill="none" stroke="${l}" stroke-width="2"/><circle r="3" fill="${d}"/>`;
+  }else if(m==='camelia'){
+    o+=ring(8,a=>pet(32,54,B,a))+ring(8,a=>pet(28,44,A,a),22)+ring(6,a=>pet(20,30,A,a),10)+`<circle r="9" fill="#e0a82e"/>`+stamens(14,10)+`<circle r="4" fill="#b8801a"/>`;
+  }else if(m==='margarita'){
+    o+=ring(16,a=>pet(7,42,B,a))+ring(16,a=>pet(6.5,35,A,a),11)+`<circle r="13" fill="#f2c94c" stroke="#b8901f" stroke-width="1.5"/>`+stamens(10,7)+`<circle r="4" fill="#d9a421"/>`;
+  }else if(m==='dalia'){
+    o+=ring(16,a=>pet(11,52,B,a))+ring(16,a=>pet(10,42,A,a),11)+ring(12,a=>pet(8,30,A,a),15)+ring(8,a=>pet(6,17,B,a),20)+`<circle r="4" fill="#f2c94c"/>`;
+  }else if(m==='tulipan'){
+    o+=`<g transform="translate(0 30)">${pet(26,66,B,-20)}${pet(26,66,B,20)}${pet(30,72,A,0)}</g>`;
+  }else{ // clavel
+    const rf=(n,r,s,f,off)=>ring(n,a=>`<circle cy="${-r}" r="${s}" fill="${f}" stroke="${d}" stroke-width="1" transform="rotate(${a})"/>`,off);
+    o+=rf(18,30,11,B,0)+rf(14,20,10,A,10)+rf(9,10,8,A,5)+`<circle r="5" fill="${d}"/>`;
+  }
+  return `<g transform="rotate(-8) scale(1 .88)">${o}</g>`;
+}
+
+/* ---------- Foto real de la flor (PNG sin fondo en img/<modelo>.png) ---------- */
+function hueOf(hex){const n=parseInt(hex.slice(1),16),r=(n>>16)/255,g=((n>>8)&255)/255,b=(n&255)/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;
+  let h=0;if(d){h=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;h*=60;if(h<0)h+=360}return{h,s:mx?d/mx:0}}
+function photoImg(s,y0){
+  const base=MODELS[s.model].c,a=hueOf(base),b=hueOf(s.color);let f='none';
+  if(s.color.toLowerCase()!==base.toLowerCase())f=b.s<.2?'grayscale(.9) brightness(1.35)':`hue-rotate(${Math.round(b.h-a.h)}deg)`;
+  return `<image href="${MODELS[s.model].img}" x="45" y="${y0-294}" width="210" height="294" preserveAspectRatio="xMidYMax meet" style="filter:${f}"/>`}
+
+function photoFilter(m,col){const base=MODELS[m].c,a=hueOf(base),b=hueOf(col);
+  if(col.toLowerCase()===base.toLowerCase())return 'none';
+  return b.s<.2?'grayscale(.9) brightness(1.35)':`hue-rotate(${Math.round(b.h-a.h)}deg)`}
+function stake(nx,ny,g,t){const px=150+Math.max(-40,Math.min(40,(nx+42-150)*.35));return [px-nx,t+(g?26:12)-ny]}
+/* ---------- Escena en perspectiva ---------- */
+function leaf(x,y,r,len,w,f='url(#lf)'){
+  return `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M0 0C${w} ${-len*.3} ${w} ${-len*.8} 0 ${-len}C${-w} ${-len*.8} ${-w} ${-len*.3} 0 0Z" fill="${f}" stroke="#3d5a2c" stroke-width=".8"/><path d="M0 -3V${-len*.85}" stroke="#3d5a2c" stroke-opacity=".5"/></g>`}
+function scene(s,mini,uid){
+  const m=s.model, c=s.color, fy=m==='tulipan'?132:128;
+  if(mini) return `<svg viewBox="-62 -62 124 124">${flower(m,c,'m'+m)}</svg>`;
+  const R=rng(7), glass=s.pot==='vidrio', ph=!!PHOTO[m], SZ=POTSIZES[s.size], topY=390-90*SZ.sy, y0=glass?390-26*SZ.sy:topY+2, U=uid||'p';
+  let o=`<svg viewBox="${SZ.vx} 0 ${SZ.vw} 410" xmlns="http://www.w3.org/2000/svg"><defs>
+   <radialGradient id="bg" cx="50%" cy="45%" r="65%"><stop offset="0" stop-color="#fffdf8"/><stop offset="1" stop-color="#efe3cf"/></radialGradient>
+   <linearGradient id="lf" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#4f6e3c"/><stop offset="1" stop-color="#93b676"/></linearGradient>
+   <linearGradient id="pw" x1="0" x2="1"><stop offset="0" stop-color="#7a5630"/><stop offset=".38" stop-color="#d7ab70"/><stop offset=".7" stop-color="#b58547"/><stop offset="1" stop-color="#6a4826"/></linearGradient>
+   <linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#bfe0ea" stop-opacity=".7"/><stop offset=".35" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#9ccbda" stop-opacity=".6"/></linearGradient>
+   <clipPath id="potclip"><path d="M84 300L216 300L204 366Q150 378 96 366Z"/></clipPath></defs>
+   <rect x="${SZ.vx}" width="${SZ.vw}" height="410" rx="14" fill="url(#bg)"/>
+   <ellipse cx="150" cy="398" rx="${100*SZ.sx}" ry="8" fill="rgba(63,46,34,.2)"/>`;
+  // fondo de volumen
+  if(s.fill.nube){for(let i=0;i<54;i++){const side=i%2?1:-1,x=150+side*(25+R()*95),y=120+R()*140,r=4+R()*4.5;
+    o+=`<line x1="150" y1="${topY}" x2="${x}" y2="${y}" stroke="#8aa376" stroke-width="1"/><circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="#e1d8c8" stroke-width=".6"/><circle cx="${x-1.2}" cy="${y-1.2}" r="${r*.4}" fill="#fff6e8"/>`}}
+  if(s.fill.manzanilla){for(let i=0;i<8;i++){const side=i%2?1:-1,x=150+side*(45+R()*70),y=110+R()*130;
+    o+=`<path d="M150 ${topY}Q${(150+x)/2} ${y+70} ${x} ${y}" stroke="#7d9a68" stroke-width="2" fill="none"/><g transform="translate(${x} ${y}) scale(.36)">${flower('margarita','#fbfaf5',U+'z'+i)}</g>`}}
+  if(s.fill.follaje){for(let i=0;i<13;i++){const a=-78+i*13,len=75+R()*50;o+=leaf(150,topY+2,a,len,10+R()*5,i%2?'url(#lf)':'#6f8f57')}}
+  const potBack=()=>{ // maceta tejida
+    let p=``;
+    p+=`<path d="M84 300L216 300L204 366Q150 378 96 366Z" fill="url(#pw)" stroke="#5e4125" stroke-width="2"/><g clip-path="url(#potclip)">`;
+    for(let i=0;i<7;i++){const y=312+i*10;p+=`<path d="M80 ${y}Q150 ${y+9} 220 ${y}" fill="none" stroke="#5e4125" stroke-opacity=".55" stroke-width="1.3"/>`;
+      for(let x=92+(i%2)*7;x<216;x+=14)p+=`<path d="M${x} ${y}l4 10" stroke="#ecc88c" stroke-opacity=".7" stroke-width="2.4"/>`}
+    p+=`</g><ellipse cx="150" cy="300" rx="66" ry="11" fill="#d7ab70" stroke="#5e4125" stroke-width="2"/><ellipse cx="150" cy="301" rx="55" ry="7.5" fill="#3d2a1a"/>`;
+    return p};
+  const potFront=()=>`
+   <path d="M98 298Q82 335 100 366Q150 378 200 366Q218 335 202 298Z" fill="url(#gl)" stroke="#8fb9c6" stroke-width="2"/>
+   <path d="M94 326Q150 336 206 326Q214 348 199 366Q150 378 101 366Q86 348 94 326Z" fill="rgba(140,200,222,.35)"/>
+   <ellipse cx="150" cy="298" rx="52" ry="9" fill="rgba(255,255,255,.3)" stroke="#8fb9c6" stroke-width="2"/>
+   <path d="M110 305Q100 335 112 358" stroke="#fff" stroke-width="4" fill="none" opacity=".8" stroke-linecap="round"/>`;
+  const potWood=()=>{
+    let p=``;
+    p+=`<polygon points="92,298 122,306 130,372 108,364" fill="#cfa466" stroke="#7a5630" stroke-width="1.5" stroke-linejoin="round"/>
+     <polygon points="122,306 178,306 170,372 130,372" fill="#e8c993" stroke="#7a5630" stroke-width="1.5" stroke-linejoin="round"/>
+     <polygon points="178,306 208,298 192,364 170,372" fill="#b98a55" stroke="#7a5630" stroke-width="1.5" stroke-linejoin="round"/>`;
+    const e='fill="none" stroke="#7a5630" stroke-opacity=".75" stroke-width="1.1" stroke-linecap="round"';
+    p+=`<g ${e}><path d="M150 366V322M150 346Q138 341 134 333M150 337Q162 332 166 324M150 328Q141 322 140 315"/><circle cx="150" cy="320" r="3.5"/><path d="M147 320h6M150 317v6"/>
+     <path d="M118 360Q117 335 120 318M119 346q-6-3-7-8M119 335q5-3 5-9"/><path d="M182 360Q184 335 181 320M182 347q6-3 7-8M182 336q-5-3-5-9"/></g>`;
+    p+=`<polygon points="92,298 122,290 178,290 208,298 178,306 122,306" fill="#e9cc98" stroke="#7a5630" stroke-width="2" stroke-linejoin="round"/>
+     <polygon points="103,298 126,293 174,293 197,298 174,303 126,303" fill="#3d2a1a"/>`;
+    return p+leaf(150,303,-72,32,8)+leaf(152,303,66,30,8)+leaf(150,303,-28,28,7)};
+  const potG=h=>`<g transform="translate(150 390) scale(${SZ.sx} ${SZ.sy}) translate(-150 -390)">${h}</g>`;
+  const pw=104*SZ.sx, plate=`<rect x="${150-pw/2}" y="372" width="${pw}" height="18" rx="3" fill="#8a6338" stroke="#5e4125" stroke-width="1.5"/><text x="150" y="385" text-anchor="middle" font-size="10" letter-spacing="4" font-family="'Cormorant Garamond',serif" font-weight="700" fill="#f1dcb6">ASAGA</text>`;
+  if(s.pot==='grabada')o+=potG(potWood())+plate; else if(!glass)o+=potG(potBack())+plate;
+  
+  const SL=[[-34,-14,.8],[34,14,.8],[-58,-24,.72],[58,24,.72],[-14,-7,.68],[14,7,.68],[-44,-17,.6],[44,17,.6],[0,0,.6]];
+  let xs='';
+  s.extras.slice(0,capX(s)).forEach((e,i)=>{const [dx,r,sc]=SL[i];
+    const inner=PHOTO[e.m]?`<image href="${MODELS[e.m].img}" x="-105" y="-294" width="210" height="294" preserveAspectRatio="xMidYMax meet" style="filter:${photoFilter(e.m,e.c)}"/>`
+     :`<path d="M0 0C2-62-6-112 0-164" stroke="#4a6339" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M0 0C2-62-6-112 0-164" stroke="#86a56a" stroke-width="3" fill="none" stroke-linecap="round" transform="translate(-1.5 0)"/>${leaf(0,-40,-62,62,16)}${leaf(0,-72,58,58,15)}<g transform="translate(0 -176)">${flower(e.m,e.c,U+'x'+i)}</g>`;
+    xs+=`<g transform="translate(${150+dx*SZ.sx} ${y0}) rotate(${r}) scale(${sc})">${inner}</g>`});
+  o+=`<g class="sway">${xs}${ph?photoImg(s,y0):''}<path ${ph?'display="none" ':''}d="M150 ${y0}C152 240 144 190 150 ${fy+10}" stroke="#4a6339" stroke-width="8" fill="none" stroke-linecap="round"/>
+   <path ${ph?'display="none" ':''}d="M150 ${y0}C152 240 144 190 150 ${fy+10}" stroke="#86a56a" stroke-width="3" fill="none" stroke-linecap="round" transform="translate(-1.5 0)"/>
+   ${ph?'':leaf(150,262,-62,62,16)+leaf(149,232,58,58,15)}`;
+  
+  if(!ph)o+=`<ellipse cx="150" cy="${fy+14}" rx="16" ry="9" fill="#5f7d4b"/><g transform="translate(150 ${fy})"><ellipse cx="4" cy="12" rx="40" ry="12" fill="rgba(0,0,0,.12)"/>${flower(m,c,U+'main')}</g>`;
+  o+='</g>';
+  for(let i=0;i<s.bees&&i<3;i++){const [x,y]=s.beePos[i];
+    o+=`<g class="bee" data-i="${i}" transform="translate(${x} ${y}) rotate(${i*20-10})"><circle r="19" fill="transparent"/><ellipse cx="-3" cy="-8" rx="7" ry="4.5" fill="#fff" opacity=".85" stroke="#bbb" stroke-width=".6"/><ellipse rx="10.5" ry="7" fill="#f2c94c" stroke="#3f2e22" stroke-width="1"/><path d="M-3-6.5V6.5M3-6.5V6.5" stroke="#3f2e22" stroke-width="2.4"/><circle cx="-10" cy="-1" r="3" fill="#3f2e22"/></g>`}
+  if(s.note&&(s.name||s.song)){
+    const nm=esc(s.name.slice(0,16)), sg=esc(s.song.replace(/^https?:\/\/\S+/,'Spotify').slice(0,22));
+    const [nx,ny]=s.notePos,[sx,sy]=stake(nx,ny,glass,topY);
+    o+=`<g class="note" data-g="${glass?1:0}" data-t="${topY}" transform="translate(${nx} ${ny})"><line class="stake" x1="34" y1="72" x2="${sx}" y2="${sy}" stroke="#8a6338" stroke-width="3" style="display:${ny+68<topY-4?'':'none'}"/>
+    <g transform="rotate(7)"><rect x="2" y="3" width="84" height="68" rx="4" fill="rgba(0,0,0,.12)"/><rect width="84" height="68" rx="4" fill="#fffaf0" stroke="#d9c7a8" stroke-width="1.5" stroke-dasharray="4 2"/>
+    <text x="42" y="30" text-anchor="middle" font-size="${nm.length>10?12:15}" font-family="'${s.font}',cursive" fill="#3f2e22">${nm}</text>
+    ${sg?`<text x="42" y="52" text-anchor="middle" font-size="8.5" font-family="'${s.font}',cursive" fill="#1db954">♪ ${sg}</text>`:''}</g></g>`}
+  if(glass)o+=potG(potFront())+plate;
+  return o+'</svg>';
+}
+
+/* ---------- Precio ---------- */
+function xPrice(m){return Math.round(MODELS[m].p*EXTRA_FACTOR)}
+const zt=([px,py])=>(py<120?'arriba':py>260?'abajo, cerca de la maceta':'a media altura')+' '+(px<120?'a la izquierda':px>180?'a la derecha':'al centro');
+function unit(s){let p=MODELS[s.model].p+POTS[s.pot].p+POTSIZES[s.size].p+s.bees*BEE_PRICE+s.extras.reduce((a,e)=>a+xPrice(e.m),0);
+  for(const k in s.fill)if(s.fill[k])p+=FILLERS[k].p;
+  if(s.note&&(s.name||s.song))p+=NOTE_PRICE;return p}
+function describe(s){const x=[MODELS[s.model].n+' ('+s.color+')',POTS[s.pot].n+' '+POTSIZES[s.size].n.toLowerCase()+' ('+POTSIZES[s.size].cap+' flores máx.)'];
+  const f=Object.keys(s.fill).filter(k=>s.fill[k]).map(k=>FILLERS[k].n);if(f.length)x.push('Fondo: '+f.join(', '));
+  if(s.bees){const z=([px,py])=>(py<120?'arriba':py>260?'abajo, cerca de la maceta':'a media altura')+' '+(px<120?'a la izquierda':px>180?'a la derecha':'al centro');
+    x.push(s.bees+' abejita(s): '+s.beePos.slice(0,s.bees).map(z).join(' · '))}
+  if(s.extras.length)x.push('Flores extra: '+s.extras.map(e=>MODELS[e.m].n+' ('+e.c+')').join(', '));
+  if(s.note&&(s.name||s.song))x.push(`Nota: "${s.name}" ♪ ${s.song} (${s.font}) — ${zt([s.notePos[0]+42,s.notePos[1]+34])}`);return x}
+
+/* ---------- Render ---------- */
+function render(){
+  $('preview').innerHTML=scene(S);
+  $('price').textContent=money(unit(S)*S.qty);
+  $('beeTip').hidden=!(S.bees||(S.note&&(S.name||S.song)));$('qty').textContent=S.qty;$('beeN').textContent=S.bees;
+  $('beeP').textContent=S.bees?`+${money(S.bees*BEE_PRICE)}`:`${money(BEE_PRICE)} c/u`;
+  $('noteBox').hidden=!S.note;
+  document.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',b.dataset.m===S.model));
+  document.querySelectorAll('[data-s]').forEach(b=>b.classList.toggle('on',b.dataset.s===S.size));
+  document.querySelectorAll('[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p===S.pot));
+  document.querySelectorAll('.sw').forEach(b=>b.classList.toggle('on',b.dataset.c===S.color));
+}
+function modelsHTML(){return Object.entries(MODELS).map(([k,v])=>`<button class="opt" data-m="${k}">${PHOTO[k]?`<img src="${v.img}" alt="" style="width:64px;height:64px;object-fit:contain;display:block;margin:auto">`:scene({model:k,color:v.c},true)}${v.n}<small>${money(v.p)}</small></button>`).join('')}
+function xmodelsHTML(){return Object.entries(MODELS).map(([k,v])=>`<button class="opt" data-x="${k}">${PHOTO[k]?`<img src="${v.img}" alt="" style="width:64px;height:64px;object-fit:contain;display:block;margin:auto">`:scene({model:k,color:v.c},true)}${v.n}<small>+${money(xPrice(k))}</small></button>`).join('')}
+function renderX(){
+  const cap=POTSIZES[S.size].cap;
+  $('xcount').textContent=S.extras.length+'/'+(cap-1);
+  $('xhint').textContent=`Tu maceta ${POTSIZES[S.size].n.toLowerCase()} lleva hasta ${cap} flores (la principal + ${cap-1}). Cada extra cuesta el ${Math.round(EXTRA_FACTOR*100)}% del precio de su modelo.`;
+  $('xlist').innerHTML=S.extras.map((e,i)=>`<div class="row" style="justify-content:space-between"><span>${MODELS[e.m].n} <input type="color" data-xc="${i}" value="${e.c}" title="Color" style="border:none;background:none;width:36px;height:28px;vertical-align:middle"></span><span>${money(xPrice(e.m))} <button class="btn" data-xr="${i}" style="padding:2px 12px">Quitar</button></span></div>`).join('')}
+function build(){
+  $('models').innerHTML=modelsHTML();$('xmodels').innerHTML=xmodelsHTML();
+  $('sizes').innerHTML=Object.entries(POTSIZES).map(([k,v])=>`<button class="opt" data-s="${k}"><b>${v.n}</b><small>hasta ${v.cap} flores</small><small>${v.p?'+'+money(v.p):'incluida'}</small></button>`).join('');
+  $('pots').innerHTML=Object.entries(POTS).map(([k,v])=>`<button class="opt" data-p="${k}"><b>${v.n}</b><small>${v.d}</small><small>+${money(v.p)}</small></button>`).join('');
+  $('colors').innerHTML=COLORS.map(c=>`<div class="sw" data-c="${c}" style="background:${c}"></div>`).join('')+'<input type="color" id="cc" value="#e8a0b4" title="Color personalizado" style="width:40px;height:34px;border:none;background:none">';
+  $('fillers').innerHTML=Object.entries(FILLERS).map(([k,v])=>`<label class="row"><input type="checkbox" data-f="${k}"> ${v.n} <small>+${money(v.p)}</small></label>`).join('');
+  $('font').innerHTML=Object.entries(FONTS).map(([k,v])=>`<option value="${k}" style="font-family:'${k}'">${v}</option>`).join('');
+}
+function renderCart(){
+  $('count').textContent=cart.reduce((a,i)=>a+i.qty,0);
+  $('items').innerHTML=cart.length?cart.map((i,n)=>`<div class="item"><div class="top"><b>${i.qty} × ${esc(i.lines[0])}</b><span>${money(i.unit*i.qty)}</span></div>
+   <div>${i.lines.slice(1).map(esc).join('<br>')}</div><button data-rm="${n}">Quitar</button></div>`).join(''):'<p class="hint">Tu carrito está vacío.</p>';
+  $('cartTotal').textContent=money(cart.reduce((a,i)=>a+i.unit*i.qty,0));
+  try{localStorage.setItem('asaga_cart',JSON.stringify(cart))}catch(e){}
+}
+
+/* ---------- Eventos ---------- */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button,.sw'); if(!t)return;
+  if(t.dataset.m){S.model=t.dataset.m;S.color=MODELS[S.model].c}
+  else if(t.dataset.p)S.pot=t.dataset.p;
+  else if(t.dataset.c)S.color=t.dataset.c;
+  else if(t.dataset.bee)S.bees=Math.max(0,Math.min(3,S.bees+ +t.dataset.bee));
+  else if(t.dataset.q)S.qty=Math.max(1,Math.min(20,S.qty+ +t.dataset.q));
+  else if(t.dataset.s){S.size=t.dataset.s;S.extras.length=Math.min(S.extras.length,capX(S));renderX()}
+  else if(t.dataset.pa){const q=PRESETS.find(x=>x.id===t.dataset.pa);cart.push({unit:unit(q.s),qty:1,lines:['Arreglo '+q.t+' — '+q.d].concat(describe(q.s))});renderCart();$('drawer').classList.add('open');return}
+  else if(t.dataset.pc){const q=PRESETS.find(x=>x.id===t.dataset.pc);Object.assign(S,JSON.parse(JSON.stringify(q.s)));syncUI();renderX();document.querySelector('.stage').scrollIntoView({behavior:'smooth',block:'start'})}
+  else if(t.dataset.x){if(S.extras.length<capX(S)){S.extras.push({m:t.dataset.x,c:MODELS[t.dataset.x].c});renderX()}}
+  else if(t.dataset.xr){S.extras.splice(+t.dataset.xr,1);renderX()}
+  else if(t.dataset.rm){cart.splice(+t.dataset.rm,1);renderCart();return}
+  else return;
+  render();
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.id==='cc')S.color=t.value;
+  else if(t.dataset.xc!==undefined)S.extras[+t.dataset.xc].c=t.value;
+  else if(t.dataset.f)S.fill[t.dataset.f]=t.checked;
+  else if(t.id==='noteOn')S.note=t.checked;
+  else if(t.id==='name')S.name=t.value;
+  else if(t.id==='song')S.song=t.value;
+  else if(t.id==='font')S.font=t.value;
+  else return;
+  render();
+});
+$('add').onclick=()=>{cart.push({unit:unit(S),qty:S.qty,lines:describe(S)});renderCart();$('drawer').classList.add('open')};
+$('openCart').onclick=()=>$('drawer').classList.add('open');
+$('closeCart').onclick=()=>$('drawer').classList.remove('open');
+$('checkout').onclick=()=>{
+  if(!cart.length)return;
+  const txt='Hola ASAGA, quiero pedir:\n\n'+cart.map(i=>`• ${i.qty} × ${i.lines.join(' | ')} — ${money(i.unit*i.qty)}`).join('\n')+'\n\nTotal: '+$('cartTotal').textContent;
+  window.open('https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(txt),'_blank');
+};
+/* ---------- Arrastrar abejitas y nota ---------- */
+(()=>{let cur=null,svg=null,off=[0,0];const box=$('preview');
+  const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const pt=e=>{const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())};
+  box.addEventListener('pointerdown',e=>{const b=e.target.closest('.bee,.note');if(!b)return;
+    svg=box.querySelector('svg');cur=b;const q=pt(e);
+    if(b.classList.contains('note'))off=[q.x-S.notePos[0],q.y-S.notePos[1]];
+    b.setPointerCapture(e.pointerId);e.preventDefault()});
+  box.addEventListener('pointermove',e=>{if(!cur)return;const q=pt(e),vb=svg.viewBox.baseVal;
+    if(cur.classList.contains('note')){
+      const t=+cur.dataset.t,x=cl(q.x-off[0],vb.x+4,vb.x+vb.width-88),y=cl(q.y-off[1],6,340);S.notePos=[x,y];
+      cur.setAttribute('transform',`translate(${x} ${y})`);
+      const l=cur.querySelector('.stake'),[sx,sy]=stake(x,y,cur.dataset.g==='1',t);
+      l.setAttribute('x2',sx);l.setAttribute('y2',sy);l.style.display=(y+68<t-4)?'':'none';return}
+    const i=+cur.dataset.i,x=cl(q.x,vb.x+12,vb.x+vb.width-12),y=cl(q.y,12,392);S.beePos[i]=[x,y];
+    cur.setAttribute('transform',`translate(${x} ${y}) rotate(${i*20-10})`)});
+  const end=()=>{cur=null};
+  box.addEventListener('pointerup',end);box.addEventListener('pointercancel',end);
+  box.addEventListener('touchmove',e=>{if(cur)e.preventDefault()},{passive:false});
+})();
+/* ---------- Arreglos listos ---------- */
+const mk=o=>Object.assign({notePos:[212,196],beePos:[[196,98],[108,150],[178,172]],note:false,name:'',song:'',font:'Dancing Script',qty:1,bees:0,fill:{},extras:[]},o);
+const X=(m,c)=>({m,c});
+const PRESETS=[
+ {id:'chica',t:'Ramillete',d:'Maceta chica · 5 flores',s:mk({model:'rosa',color:'#e8a0b4',pot:'grabada',size:'chica',bees:1,fill:{follaje:true},
+   extras:[X('margarita','#f6efe6'),X('margarita','#f6efe6'),X('dalia','#b39ddb'),X('tulipan','#f4b183')]})},
+ {id:'mediana',t:'Jardín',d:'Maceta mediana · 8 flores',s:mk({model:'dalia',color:'#9b7fd1',pot:'tejida',size:'mediana',bees:2,fill:{nube:true,follaje:true},
+   extras:[X('rosa','#e8a0b4'),X('rosa','#e8a0b4'),X('clavel','#ee7f6b'),X('margarita','#f6efe6'),X('margarita','#f6efe6'),X('tulipan','#e67e22'),X('camelia','#f4b183')]})},
+ {id:'grande',t:'Pradera',d:'Maceta grande · 10 flores',s:mk({model:'camelia',color:'#d9433a',pot:'grabada',size:'grande',bees:3,fill:{nube:true,manzanilla:true,follaje:true},
+   extras:[X('rosa','#e8a0b4'),X('rosa','#c0392b'),X('dalia','#b39ddb'),X('dalia','#f2c94c'),X('clavel','#ee7f6b'),X('margarita','#f6efe6'),X('margarita','#f6efe6'),X('tulipan','#e67e22'),X('tulipan','#f4b183')]})}
+];
+function renderPresets(){
+  $('pgrid').innerHTML=PRESETS.map(q=>`<div class="pcard">${scene(q.s,false,'pr'+q.id)}<h4>${q.t}</h4><small>${q.d}</small><div class="pp">${money(unit(q.s))}</div>
+   <div class="btns"><button class="btn primary" data-pa="${q.id}">Agregar al carrito</button><button class="btn" data-pc="${q.id}">Personalizar</button></div></div>`).join('')}
+function syncUI(){document.querySelectorAll('[data-f]').forEach(c=>c.checked=!!S.fill[c.dataset.f]);
+  $('noteOn').checked=S.note;$('name').value=S.name;$('song').value=S.song;$('font').value=S.font}
+build();renderX();renderPresets();render();renderCart();
+Object.keys(MODELS).forEach(k=>{MODELS[k].img='img/'+k+'.png';const i=new Image();
+  i.onload=()=>{PHOTO[k]=true;$('models').innerHTML=modelsHTML();$('xmodels').innerHTML=xmodelsHTML();renderPresets();render()};i.src=MODELS[k].img});
+</script>
+</body>
+</html>
